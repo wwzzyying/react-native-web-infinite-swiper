@@ -2,6 +2,10 @@
 
 Simple swiper / slider. Works both on React-Native and React-Native-Web with infinite scroll feature.
 
+## Demo
+
+Hybrid Snack: https://snack.expo.dev/@wwzzyying/react-native-web-infinite-swiper
+
 fork from [`react-native-web-swiper`](https://github.com/reactrondev/react-native-web-swiper)
 
 ## Installation
