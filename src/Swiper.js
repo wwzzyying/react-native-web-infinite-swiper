@@ -93,6 +93,10 @@ class Swiper extends React.Component {
     this.state.pan.y.removeAllListeners();
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    this.count = React.Children.toArray(nextProps.children).length;
+  }
+
   _getPanResponderCallbacks() {
     return {
       onPanResponderTerminationRequest: () => false,
@@ -176,7 +180,7 @@ class Swiper extends React.Component {
   }
 
   _changeIndex(delta = 1) {
-    const { loop, vertical } = this.props;
+    const { loop, vertical, infinite = true } = this.props;
     const { width, height, activeIndex } = this.state;
 
     let toValue = { x: 0, y: 0 };
@@ -189,6 +193,9 @@ class Swiper extends React.Component {
     } else if (activeIndex + 1 >= this.count && delta > 0) {
       skipChanges = !loop;
       calcDelta = -1 * activeIndex + delta - 1;
+      if (infinite) {
+        calcDelta = 1
+      }
     }
 
     if (skipChanges) {
@@ -198,6 +205,9 @@ class Swiper extends React.Component {
     this.stopAutoplay();
 
     let index = activeIndex + calcDelta;
+    if (infinite) {
+      index = index % this.count
+    }
     this.setState({ activeIndex: index });
 
     if (vertical) {
@@ -225,6 +235,7 @@ class Swiper extends React.Component {
     const {
       theme,
       loop,
+      infinite = true,
       vertical,
       positionFixed,
       containerStyle,
@@ -235,6 +246,14 @@ class Swiper extends React.Component {
       controlsProps,
       Controls = DefaultControls,
     } = this.props;
+
+    const children = React.Children.toArray(infinite ?
+      (I18nManager.isRTL ? 
+        [this.props.children[this.props.children.length - 1], ...this.props.children]: 
+        [...this.props.children, this.props.children[0]]) : 
+      this.props.children
+    );
+    const count = children.length;
 
     return (
       <View
@@ -249,7 +268,7 @@ class Swiper extends React.Component {
         >
           <Animated.View
             style={StyleSheet.flatten([
-              styles.swipeArea(vertical, this.count, width, height),
+              styles.swipeArea(vertical, count, width, height),
               swipeAreaStyle,
               {
                 transform: [{ translateX: pan.x }, { translateY: pan.y }],
@@ -257,7 +276,7 @@ class Swiper extends React.Component {
             ])}
             {...this._panResponder.panHandlers}
           >
-            {this.children.map((el, i) => (
+            {children.map((el, i) => (
               <View
                 key={i}
                 style={StyleSheet.flatten([
@@ -265,7 +284,11 @@ class Swiper extends React.Component {
                   slideWrapperStyle,
                 ])}
               >
-                {cloneElement(el, { activeIndex: this.getActiveIndex(), index: i, isActive: i === this.getActiveIndex() })}
+                {cloneElement(el, { 
+                  activeIndex: this.getActiveIndex(), 
+                  index: i, 
+                  isActive: i === this.getActiveIndex()
+                })}
               </View>
             ))}
           </Animated.View>
@@ -291,6 +314,7 @@ class Swiper extends React.Component {
 
 Swiper.propTypes = {
   vertical: PropTypes.bool,
+  infinite: PropTypes.bool,
   from: PropTypes.number,
   loop: PropTypes.bool,
   timeout: PropTypes.number,

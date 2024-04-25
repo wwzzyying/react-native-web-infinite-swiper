@@ -1,15 +1,13 @@
-# react-native-web-swiper
+# react-native-web-infinite-swiper
 
-Simple swiper / slider. Works both on React-Native and React-Native-Web.
+Simple swiper / slider. Works both on React-Native and React-Native-Web with infinite scroll feature.
 
-## Demo
-
-Hybrid Snack: https://snack.expo.io/@oxyii/react-native-web-swiper
+fork from [`react-native-web-swiper`](https://github.com/reactrondev/react-native-web-swiper)
 
 ## Installation
 
 ```bash
-$ npm i react-native-web-swiper --save
+$ npm i react-native-web-infinite-swiper --save
 ```
 
 ## Usage
@@ -17,7 +15,7 @@ $ npm i react-native-web-swiper --save
 ```jsx
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Swiper from 'react-native-web-swiper';
+import Swiper from 'react-native-web-infinite-swiper';
 
 const styles = StyleSheet.create({
   container: {
@@ -88,7 +86,7 @@ The slide automatically gets `props.isActive`, `props.activeIndex` and `props.in
 ```jsx
 import React from 'react';
 import { Text, View } from 'react-native';
-import Swiper from 'react-native-web-swiper';
+import Swiper from 'react-native-web-infinite-swiper';
 
 type Props = {
   index?: number,
@@ -117,6 +115,7 @@ This is possible because `Swiper` used `cloneElement` and inject internally the 
 |         Prop         |    Default   |          Type         | Description |
 | :------------------- |:------------:| :--------------------:| :-----------|
 | vertical             | `false`      | `boolean`             | Swiper vertical layout |
+| infinite             | `true`       | `boolean`             | enable infinite scroll |
 | from                 | `0`          | `number`              | Initial slide index |
 | loop                 | `false`      | `boolean`             | Set to `true` to enable continuous loop mode |
 | timeout              | `0`          | `number`              | Delay between auto play transitions (in second). Set negative value for reverse autoplay :satisfied:. Autoplay disabled by default |

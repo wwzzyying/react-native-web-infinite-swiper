@@ -1,7 +1,7 @@
 {
-  "name": "react-native-web-swiper",
-  "version": "2.2.4",
-  "homepage": "https://github.com/reactrondev/react-native-web-swiper#readme",
+  "name": "react-native-web-infinite-swiper",
+  "version": "1.0.0",
+  "homepage": "https://github.com/wwzzyying/react-native-web-infinite-swiper#readme",
   "types": "./index.d.ts",
   "main": "build/index.js",
   "license": "MIT",
@@ -10,11 +10,13 @@
     "react-native-web",
     "swipe",
     "swiper",
-    "slider"
+    "slider",
+    "infinite",
+    "infinite-swiper"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/reactrondev/react-native-web-swiper.git"
+    "url": "git+https://github.com/wwzzyying/react-native-web-infinite-swiper.git"
   },
   "scripts": {
     "build": "rm -rf build && babel src --out-dir build",

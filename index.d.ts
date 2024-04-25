@@ -215,6 +215,13 @@ export interface SwiperProps {
      */
     vertical?: boolean;
 
+    /** 
+     * Allow infinite loop
+     *
+     * @default true
+     */
+    infinite?: boolean;
+
     /**
      * Initial slide index
      *
