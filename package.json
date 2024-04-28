@@ -1,6 +1,6 @@
 {
   "name": "react-native-web-infinite-swiper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/wwzzyying/react-native-web-infinite-swiper#readme",
   "types": "./index.d.ts",
   "main": "build/index.js",

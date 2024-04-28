@@ -119,10 +119,10 @@ This is possible because `Swiper` used `cloneElement` and inject internally the 
 |         Prop         |    Default   |          Type         | Description |
 | :------------------- |:------------:| :--------------------:| :-----------|
 | vertical             | `false`      | `boolean`             | Swiper vertical layout |
-| infinite             | `true`       | `boolean`             | enable infinite scroll |
+| infinite             | `true`       | `boolean`             | enable infinite scroll(only support LTR) |
 | from                 | `0`          | `number`              | Initial slide index |
 | loop                 | `false`      | `boolean`             | Set to `true` to enable continuous loop mode |
-| timeout              | `0`          | `number`              | Delay between auto play transitions (in second). Set negative value for reverse autoplay :satisfied:. Autoplay disabled by default |
+| timeout              | `0`          | `number`              | Delay between auto play transitions (in second). Set negative value for reverse autoplay(can use to simulate RTL) :satisfied:. Autoplay disabled by default |
 | gesturesEnabled      | `() => true` | `function`            | Function that returns boolean value. Must return `false` to disable swiping mechanism. Does not disable Prev / Next buttons |
 | springConfig         |              | [`Animated.spring`](https://facebook.github.io/react-native/docs/animated#spring) | Tune spring animation on autoplay, touch release or slides changes via buttons |
 | minDistanceToCapture | `5`          | `number`              | Initiate animation after swipe this distance. It fix gesture collisions inside ScrollView |

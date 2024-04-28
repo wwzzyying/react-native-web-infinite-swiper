@@ -1,6 +1,6 @@
 import React, { cloneElement } from 'react';
 import PropTypes from 'prop-types';
-import { Animated, I18nManager, PanResponder, StyleSheet, View } from 'react-native';
+import { Animated, PanResponder, StyleSheet, View } from 'react-native';
 
 import DefaultControls from './Controls';
 
@@ -144,7 +144,7 @@ class Swiper extends React.Component {
         ) {
           this._spring({ x: 0, y: 0 });
         } else {
-          this._changeIndex(correction > 0 ? (!vertical && I18nManager.isRTL ? 1 : -1) : (!vertical && I18nManager.isRTL ? -1 : 1));
+          this._changeIndex(correction > 0 ? (!vertical && -1) : (!vertical && 1));
         }
       },
     };
@@ -163,7 +163,7 @@ class Swiper extends React.Component {
   _fixState() {
     const { vertical } = this.props;
     const { width, height, activeIndex } = this.state;
-    this._animatedValueX = vertical ? 0 : width * activeIndex * (I18nManager.isRTL ? 1 : -1);
+    this._animatedValueX = vertical ? 0 : width * activeIndex * (-1);
     this._animatedValueY = vertical ? height * activeIndex * -1 : 0;
     this.state.pan.setOffset({
       x: this._animatedValueX,
@@ -193,7 +193,7 @@ class Swiper extends React.Component {
     } else if (activeIndex + 1 >= this.count && delta > 0) {
       skipChanges = !loop;
       calcDelta = -1 * activeIndex + delta - 1;
-      if (infinite) {
+      if (infinite && this.count > 1) {
         calcDelta = 1
       }
     }
@@ -205,7 +205,7 @@ class Swiper extends React.Component {
     this.stopAutoplay();
 
     let index = activeIndex + calcDelta;
-    if (infinite) {
+    if (infinite && this.count > 1) {
       index = index % this.count
     }
     this.setState({ activeIndex: index });
@@ -213,7 +213,7 @@ class Swiper extends React.Component {
     if (vertical) {
       toValue.y = height * -1 * calcDelta;
     } else {
-      toValue.x = width * (I18nManager.isRTL ? 1 : -1) * calcDelta;
+      toValue.x = width * (-1) * calcDelta;
     }
     this._spring(toValue);
 
@@ -247,10 +247,9 @@ class Swiper extends React.Component {
       Controls = DefaultControls,
     } = this.props;
 
-    const children = React.Children.toArray(infinite ?
-      (I18nManager.isRTL ? 
-        [this.props.children[this.props.children.length - 1], ...this.props.children]: 
-        [...this.props.children, this.props.children[0]]) : 
+    const children = React.Children.toArray(infinite && this.props.children.length > 1 ?
+      [...this.props.children, this.props.children[0]]
+      : 
       this.props.children
     );
     const count = children.length;
